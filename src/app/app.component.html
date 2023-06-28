@@ -1,0 +1,12 @@
+<div class="main-content">
+    <app-header></app-header>
+    <div class="row">
+        <div class="col-lg-2" [ngClass]="commanService.isShow ? 'd-block':'d-none'">
+            <app-sidebar></app-sidebar>
+        </div>
+        <div class=" col-lg-10">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</div>
