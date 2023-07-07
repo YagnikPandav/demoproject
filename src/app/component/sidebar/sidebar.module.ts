@@ -3,20 +3,26 @@ import { CommonModule } from '@angular/common';
 
 import { SidebarRoutingModule } from './sidebar-routing.module';
 import { FormComponent } from './form/form.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { SubjectComponent } from './subject/subject.component';
 
 
 @NgModule({
   declarations: [
-    FormComponent
+    FormComponent,
+    SubjectComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     BrowserModule,
-    
-    SidebarRoutingModule
+    SidebarRoutingModule,
+    ReactiveFormsModule
+  ],
+  exports: [
+    FormComponent
   ]
+
 })
 export class SidebarModule { }

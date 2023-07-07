@@ -12,8 +12,9 @@ import { HomeComponent } from './component/home/home.component';
 import { PriceComponent } from './component/price/price.component';
 import { SidebarComponent } from './component/sidebar/sidebar.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HomeModule } from './component/home/home.module';
 import { SidebarModule } from './component/sidebar/sidebar.module';
+import { CommanService } from './services/comman.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -31,12 +32,14 @@ import { SidebarModule } from './component/sidebar/sidebar.module';
     BrowserModule,
     CommonModule,
     FormsModule,
-    RouterModule.forRoot([]),
     AppRoutingModule,
-    HomeModule,
-    SidebarModule
+    SidebarModule,
+    RouterModule.forRoot([]),
+    HttpClientModule,
+
+
   ],
-  providers: [],
+  providers: [CommanService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

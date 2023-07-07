@@ -1,97 +1,163 @@
-<div class="container">
-    <div class="row">
-        <div class="mt-2 col-12">
-            <h1>Registration Form</h1>
-        </div>
-        <div class="mt-2 col-6">
-            <label for="fname">First name</label>
-            <input type="text" class="form-control" [(ngModel)]="register.Firstname">
-        </div>
-        <div class="mt-2 col-6">
-            <label for="mname">Middle name</label>
-            <input type="text" class="form-control" [(ngModel)]="register.MiddleName">
-        </div>
-        <div class="mt-2 col-12">
-            <label for="lname">Last name</label>
-            <input type="text" class="form-control" [(ngModel)]="register.Lastname">
-        </div>
-        <div class="mt-2 col-6">
-            <label for="fname">Gender</label><br>
-            <label class="m-1" for="male">male</label>
-            <input type="radio" id="male" name="MALE" value="male" [(ngModel)]="register.Gender">
-            <label class="m-1" for="female">Female</label>
-            <input type="radio" id="female" name="female" value="female" [(ngModel)]="register.Gender">
-        </div>
-        <div class="mt-2 col-6">
-            <label for="hobby">hobby</label><br>
-            <input type="checkbox" id="driwing" value="driwing" name="driwing" [(ngModel)]="register.Hobby">
-            <label class="m-1" for="driwing">Driwing</label>
-            <input type="checkbox" id="singing" value="singing" name="singing" [(ngModel)]="register.Hobby">
-            <label class="m-1" for="singing">Singing</label>
-            <input type="checkbox" id="singing" value="playing" name="playing" [(ngModel)]="register.Hobby">
-            <label class="m-1" for="playing">Playing</label>
-            <input type="checkbox" id="swiming" value="swiming" name="swiming" [(ngModel)]="register.Hobby">
-            <label class="m-1" for="swiming">Swiming</label>
-        </div>
-        <div class="mt-2 col-6">
-            <label for="country">Country</label>
-            <select class="form-select" aria-label="Default select example" [(ngModel)]="register.Country">
-                <option selected></option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
-        </div>
-        <div class="mt-2 col-6">
-            <label for="country">State</label>
-            <select class="form-select" aria-label="Default select example" [(ngModel)]="register.State">
-                <option selected></option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
-        </div>
-        <div class="mt-2 col-6">
-            <label for="country">City</label>
-            <select class="form-select" aria-label="Default select example" [(ngModel)]="register.City">
-                <option selected></option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
-        </div>
-        <div class="mt-2 col-6">
-            <button type="button" class="m-2 w-25 btn btn-success" (click)="Register()">Save</button>
-            <button type="button" class="m-2 w-25 btn btn-primary">Cancel</button>
+<!-- Button trigger modal -->
+<div class="col-lg-12 m-1">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Add Data
+    </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                <div class="modal-header">
+                    <h1>Registration Form</h1>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="mt-2 col-6">
+                                <label for="fname">First name</label>
+                                <input type="text" class="form-control" formControlName="firstname">
+                                <div class="text-danger"
+                                    *ngIf="registerForm.get('firstname')?.invalid && (registerForm.get('firstname')?.dirty || registerForm.get('firstname')?.touched)">
+                                    First name Required
+                                </div>
+                            </div>
+
+                            <div class="mt-2 col-6">
+                                <label for="mname">Middle name</label>
+                                <input type="text" class="form-control" formControlName="middlename">
+                                <div class="text-danger"
+                                    *ngIf="registerForm.get('middlename')?.invalid && (registerForm.get('middlename')?.dirty || registerForm.get('middlename')?.touched)">
+                                    Middlename Required
+                                </div>
+                            </div>
+                            <div class="mt-2 col-12">
+                                <label for="lname">Last name</label>
+                                <input type="text" class="form-control" formControlName="lastname">
+                                <div class="text-danger"
+                                    *ngIf="registerForm.get('lastname')?.invalid && (registerForm.get('lastname')?.dirty || registerForm.get('lastname')?.touched)">
+                                    Lastname Required
+                                </div>
+                            </div>
+                            <div class="mt-2 col-6">
+                                <label for="fname">Gender</label><br>
+                                <label class="m-1" for="male">male</label>
+                                <input id="male" type="radio" value="male" name="gender" formControlName="gender">
+                                <label class="m-1" for="female">Female</label>
+                                <input id="female" type="radio" value="female" name="gender" formControlName="gender">
+                            </div>
+                            <div class="mt-2 col-6">
+                                <label for="hobby">hobby</label><br>
+                                <div *ngFor="let data of Data; let i=index">
+                                    <input type="checkbox" [value]="data.value" (change)="onCheckboxChange($event)" />
+                                    {{data.name}}
+                                </div>
+                            </div>
+                            <div class="mt-2 col-6">
+                                <label for="country">Country</label>
+                                <select class="form-control" (change)="changeCountry($event)" formControlName="country">
+                                    <option [selected]="true">Please Select Country</option>
+                                    <option *ngFor="let count of countryList">{{count.name}} </option>
+                                </select>
+                                <div class="text-danger"
+                                    *ngIf="registerForm.get('country')?.invalid && (registerForm.get('country')?.dirty || registerForm.get('country')?.touched)">
+                                    country Required
+                                </div>
+                            </div>
+                            <div class="mt-2 col-6">
+                                <label for="country">State</label>
+                                <select class="form-control" placeholder="Phantasyland" (change)="changeState($event)"
+                                    formControlName="state">
+                                    <option [selected]="true">Please Select State</option>
+                                    <option *ngFor="let count of cities">{{ count }}</option>
+                                </select>
+                                <div class="text-danger"
+                                    *ngIf="registerForm.get('state')?.invalid && (registerForm.get('state')?.dirty || registerForm.get('state')?.touched)">
+                                    State Required
+                                </div>
+                            </div>
+                            <div class="mt-2 col-6">
+                                <label>City</label>
+                                <select class="form-control" formControlName="city">
+                                    <option [selected]="true">Please Select City</option>
+                                    <option *ngFor="let city of state">{{ city }}</option>
+                                </select>
+                                <div class="text-danger"
+                                    *ngIf="registerForm.get('city')?.invalid && (registerForm.get('city')?.dirty || registerForm.get('city')?.touched)">
+                                    city Required
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="!registerForm.valid">Save</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
+<div class="container-fluid">
+    <table class="table">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Middle Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Hobby</th>
+                <th scope="col">Country</th>
+                <th scope="col">State</th>
+                <th scope="col">City</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of FormData;let i = index">
+                <td>{{i + 1}}</td>
+                <td>{{item.firstname}}</td>
+                <td>{{item.middlename}}</td>
+                <td>{{item.lastname}}</td>
+                <td>{{item.gender}}</td>
+                <td>{{item.hobby}}</td>
+                <td>{{item.country}}</td>
+                <td>{{item.state}}</td>
+                <td>{{item.city}}</td>
+                <td> <img class="icon-set" src="../../../../assets/icon/delete.png" alt="" data-toggle="modal"
+                        data-target="#delete">
+                    <img class="icon-set" src="../../../../assets/icon/user.png" alt="" data-toggle="modal"
+                        data-target="#exampleModal">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
-<table class="table table-dark">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">First Name</th>
-            <th scope="col">Middle Name</th>
-            <th scope="col">Gender</th>
-            <th scope="col">Hobby</th>
-            <th scope="col">Country</th>
-            <th scope="col">State</th>
-            <th scope="col">City</th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- <tr *ngFor="let item of getLocal">
-            <th scope="row">1</th>
-            <td>{{item.Firstname}}</td>
-            <td>{{item.MiddleName}}</td>
-            <td>{{item.Lastname}}</td>
-            <td>{{item.Gender}}</td>
-            <td>{{item.Hobby}}</td>
-            <td>{{item.Country}}</td>
-            <td>{{item.State}}</td>
-            <td>{{item.City}}</td>
-        </tr> -->
-    </tbody>
-</table>
+
+<div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="delete" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1>Delete User</h1>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure to delete
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" (click)="Delete()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>

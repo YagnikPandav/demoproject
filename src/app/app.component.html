@@ -4,7 +4,8 @@
         <div class="col-lg-2" [ngClass]="commanService.isShow ? 'd-block':'d-none'">
             <app-sidebar></app-sidebar>
         </div>
-        <div class=" col-lg-10">
+        <div [ngClass]="commanService.isShow ? 'col-lg-10':'col-lg-12'">
+            <!-- <app-form></app-form> -->
             <router-outlet></router-outlet>
         </div>
     </div>

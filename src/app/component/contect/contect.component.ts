@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommanService } from 'src/app/services/comman.service';
 
 @Component({
   selector: 'app-contect',
@@ -7,9 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContectComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public commanService: CommanService
+  ) { }
 
   ngOnInit(): void {
   }
+
+  sendData(data: any) {
+      console.log(data.value);
+    this.commanService.sendNotification(data.value)
+  }
+
+
 
 }
